@@ -1,15 +1,6 @@
 <template>
    <main class="container max-w-7xl bg-slate-50" style="position: relative;">
 
-      <!-- Header -->
-      <header class="chapter-card mb-2">
-         <p class="leading-loose">
-            <router-link class="cursor-pointer hover:underline" :to="`/student/anatomy`">Anatomie</router-link>
-            /
-            <span class="font-semibold">{{ anatomy?.name }}</span>
-         </p>
-      </header>
-
       <div class="flex w-full gap-2">
          <button class="rounded-xl karan-btn px-6" @click="resetMeshes">
             Effacer

@@ -16,7 +16,7 @@ export default defineConfig({
          base: "/",
          srcDir: "src",
          filename: "sw.ts",
-         includeAssets: ["icons/chess-king.svg"],
+         includeAssets: ["icons/mdi-human.svg"],
          injectManifest: {
             globPatterns: ['**/*.{js,css,html,ico,png,jpg,jpeg,svg,woff,woff2,ttf,eot,wasm}'],
             maximumFileSizeToCacheInBytes: 4 * 1024 * 1024, // 4M max for build chunks
@@ -31,7 +31,7 @@ export default defineConfig({
             background_color: "#ffffff",
             icons: [
                {
-                  src: "icons/chess-king.svg",
+                  src: "icons/mdi-human.svg",
                   sizes: "any",
                   type: "image/svg+xml",
                   purpose: "any maskable",
