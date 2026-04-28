@@ -33,6 +33,12 @@
          </template>
       </ul>
 
+      <!-- loading overlay -->
+      <div v-if="isLoading" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-50 z-40">
+         <div class="w-14 h-14 rounded-full border-4 border-slate-200 border-t-violet-500 animate-spin mb-4"></div>
+         <span class="text-slate-500 text-sm">Chargement {{ loadingProgress }}%</span>
+      </div>
+
       <!-- 3D viewer -->
       <div ref="container" class="viewer"></div>
 
@@ -63,12 +69,12 @@ const props = defineProps({
 // const anatomy = anatomyOfId.value(props.anatomy_id);
 
 const container = ref(null)
-const loadingProgress = ref(0.)
+const loadingProgress = ref(0)
+const isLoading = ref(true)
 const searchTerms = ref('')
 const meshInfo = ref(null)
 
 let scene, camera, renderer, controls, raycaster, mouse, model, animationId;
-let spinnerWaitingText = null;
 const INFO_TIMEOUT = 1500;
 
 onMounted(async () => {
@@ -147,23 +153,18 @@ async function loadModel() {
       (gltf) => {
          model = gltf.scene;
          scene.add(model);
+         isLoading.value = false;
       },
       (xhr) => {
          if (xhr.total) {
             loadingProgress.value = Math.round((xhr.loaded / xhr.total) * 100);
          } else {
-            loadingProgress.value = 0; // fallback if total is not available
-         }
-         // console.log('progess', loadingProgress.value)
-         if (loadingProgress.value === 0 || loadingProgress.value === 100) {
-            spinnerWaitingText = null
-         } else {
-            spinnerWaitingText = [ "Chargement...", `${loadingProgress.value} %`]
+            loadingProgress.value = 0;
          }
       },
       (error) => {
          console.error("Error loading model:", error);
-         spinnerWaitingText = null
+         isLoading.value = false;
       }
    )
 }
